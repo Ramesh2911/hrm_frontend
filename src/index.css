@@ -1,0 +1,20 @@
+@font-face {
+  font-family: "UbuntuLight";
+  src: local("UbuntuLight"),
+   url("./fonts/ubuntu/ubuntu-light.ttf") format("truetype");
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: "Ubuntu";
+  src: local("Ubuntu"),
+   url("./fonts/ubuntu/ubuntu-regular.ttf") format("truetype");
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "UbuntuBold";
+  src: local("UbuntuBold"),
+   url("./fonts/ubuntu/ubuntu-bold.ttf") format("truetype");
+  font-weight: 700;
+}
