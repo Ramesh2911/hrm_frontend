@@ -6,7 +6,7 @@ import {
    API_ADD_LEAVES,
    API_ALL_LEAVES,
    API_APPROVE_LEAVES,
-   API_LEAVES_COUNT,
+   API_TAKEN_LEAVES_COUNT,
    API_LIST_LEAVES,
    API_REJECT_LEAVES,
    API_REMANING_LEAVES_COUNT
@@ -83,7 +83,7 @@ const ListLeave = (props) => {
    }, [roleName]);
 
    const fetchCount = () => {
-      props.callRequest("GET", (`${API_LEAVES_COUNT}/${empId}`), true, null)
+      props.callRequest("GET", (`${API_TAKEN_LEAVES_COUNT}/${empId}`), true, null)
          .then((res) => {
             const result = res?.data;
             setCountData(result);
@@ -388,7 +388,7 @@ const ListLeave = (props) => {
                      </div>
                      <hr />
                      <div className='d-flex justify-content-between'>
-                        <h5>{countData?.data?.holiday_taken || 0} day</h5>
+                        <h5>{countData?.data || 0} days</h5>
                      </div>
                   </div>
                   <div className='px-3 pt-2 pb-3 border shadow-sm w-25'>
@@ -397,7 +397,7 @@ const ListLeave = (props) => {
                      </div>
                      <hr />
                      <div className='d-flex justify-content-between'>
-                        <h5>{remaningCountData?.data?.total_leaves} day</h5>
+                        <h5>{remaningCountData?.data?.total_leaves} days</h5>
                      </div>
                   </div>
                </div>

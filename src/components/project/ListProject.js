@@ -4,6 +4,7 @@ import DataTable from "react-data-table-component";
 import DataTableSettings from "../../helpers/DataTableSettings";
 import {
    API_ADD_PROJECT,
+   API_DELETE_PROJECT,
    API_LIST_EMPLOYEES,
    API_LIST_PROJECTS,
    API_UPDATE_PROJECT
@@ -11,6 +12,7 @@ import {
    from '../../config/Api';
 import { Link } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
+import Swal from 'sweetalert2';
 
 const ListProject = (props) => {
 
@@ -177,6 +179,47 @@ const ListProject = (props) => {
       handleNoticeToggle();
    };
 
+   const handleDeleteClick = (id) => {
+      Swal.fire({
+         title: "Are you sure?",
+         text: "You won't be able to revert this!",
+         icon: "warning",
+         showCancelButton: true,
+         confirmButtonColor: "#3085d6",
+         cancelButtonColor: "#d33",
+         confirmButtonText: "Yes, delete it!"
+      }).then((result) => {
+         if (result.isConfirmed) {
+            setBtnEnable(true);
+
+            props.callRequest("DELETE", `${API_DELETE_PROJECT}/${id}`, true)
+               .then((res) => {
+                  fetchProject();
+
+                  Swal.fire({
+                     title: "Deleted!",
+                     text: "Your file has been deleted.",
+                     icon: "success"
+                  });
+               })
+               .catch((e) => {
+                  setBtnEnable(false);
+                  if (e.response && e.response.data && e.response.data.error) {
+                     toast.error(e.response.data.error, {
+                        position: toast.POSITION.TOP_CENTER,
+                        autoClose: 5000,
+                     });
+                  } else {
+                     toast.error("Something went wrong. Please try again.", {
+                        position: toast.POSITION.TOP_CENTER,
+                        autoClose: 5000,
+                     });
+                  }
+               });
+         }
+      });
+   };
+
    const columns = [
       {
          name: <h5>Employee Name</h5>,
@@ -216,7 +259,7 @@ const ListProject = (props) => {
                <Link onClick={() => handleEditClick(row)}>
                   <i className="la la-edit"></i>
                </Link>
-               <Link>
+               <Link onClick={() => handleDeleteClick(row.id)}>
                   <i className="la la-trash"></i>
                </Link>
             </>

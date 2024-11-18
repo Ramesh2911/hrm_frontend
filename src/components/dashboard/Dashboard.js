@@ -10,6 +10,7 @@ import {
    API_PROJECTS_COUNT
 }
    from '../../config/Api';
+import { Link } from 'react-router-dom';
 
 const Dashboard = (props) => {
 
@@ -159,7 +160,9 @@ const Dashboard = (props) => {
             {roleName === "ADMIN" && (
                <div className='px-3 pt-2 pb-3 border shadow-sm w-25'>
                   <div className='text-center pb-1'>
-                     <h4>Employee</h4>
+                     <Link to="/employees">
+                        <h4>Employee</h4>
+                     </Link>
                   </div>
                   <hr />
                   <div className='d-flex justify-content-between'>
@@ -168,10 +171,15 @@ const Dashboard = (props) => {
                   </div>
                </div>
             )}
-
             <div className='px-3 pt-2 pb-3 border shadow-sm w-25'>
                <div className='text-center pb-1'>
-                  <h4>Project</h4>
+                  {roleName === "ADMIN" ? (
+                     <Link to="/project">
+                        <h4>Project</h4>
+                     </Link>
+                  ) : (
+                     <h4>Project</h4>
+                  )}
                </div>
                <hr />
                <div className='d-flex justify-content-between'>
@@ -187,7 +195,13 @@ const Dashboard = (props) => {
             </div>
             <div className='px-3 pt-2 pb-3 border shadow-sm w-25'>
                <div className='text-center pb-1'>
-                  <h4>Department</h4>
+                  {roleName === "ADMIN" ? (
+                     <Link to="/department">
+                        <h4>Department</h4>
+                     </Link>
+                  ) : (
+                     <h4>Department</h4>
+                  )}
                </div>
                <hr />
                <div className='d-flex justify-content-between'>
@@ -205,7 +219,13 @@ const Dashboard = (props) => {
          <div className='p-3 d-flex justify-content-around mt-3'>
             <div className='px-3 pt-2 pb-3 border shadow-sm w-25'>
                <div className='text-center pb-1'>
-                  <h4>Designation</h4>
+                  {roleName === "ADMIN" ? (
+                     <Link to="/designation">
+                        <h4>Designation</h4>
+                     </Link>
+                  ) : (
+                     <h4>Designation</h4>
+                  )}
                </div>
                <hr />
                <div className='d-flex justify-content-between'>

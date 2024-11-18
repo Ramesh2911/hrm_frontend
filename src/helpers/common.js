@@ -189,30 +189,7 @@ const Common = (WrappedComponent) => {
       return formattedDateTime;
     }
 
-    // getFormatedDate(datetime, format = "DD-MMM-YYYY") {
-    //   let dateTime;
-
-    //   if (moment(datetime, "YYYY-MM-DD", true).isValid()) {
-    //     dateTime = moment(datetime, "YYYY-MM-DD");
-    //   }
-    //   else if (moment(datetime, "DD-MM-YYYY", true).isValid()) {
-    //     dateTime = moment(datetime, "DD-MM-YYYY");
-    //   }
-    //   else if (moment(datetime, "MM-DD-YYYY", true).isValid()) {
-    //     dateTime = moment(datetime, "MM-DD-YYYY");
-    //   }
-    //   else if (moment(datetime, "YYYY-MM-DD HH:mm:ss", true).isValid()) {
-    //     dateTime = moment(datetime, "YYYY-MM-DD HH:mm:ss");
-    //   }
-    //   else {
-    //     return "Invalid date";
-    //   }
-
-    //   const formattedDateTime = dateTime.format(format);
-    //   return formattedDateTime;
-    // }
-
-    getFormatedDate(datetime, format = "DD-MMM-YYYY") {
+    getFormatedDate(datetime, format = "DD/MM/YYYY") {
       const dateTime = moment(datetime);
       const formattedDateTime = dateTime.format(format);
       return formattedDateTime;

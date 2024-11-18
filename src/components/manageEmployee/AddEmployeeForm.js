@@ -596,7 +596,7 @@ const AddEmployee = (props) => {
                <Row className="mb-3">
                   <Col lg={4}>
                      <Form.Group controlId="holiday">
-                        <Form.Label>Holiday</Form.Label>
+                        <Form.Label>Entitled Holiday per Year</Form.Label>
                         <Form.Control
                            type="text"
                            name="holiday"
@@ -885,40 +885,6 @@ const AddEmployee = (props) => {
                   </Col>
                </Row>
                <Row className="mb-3">
-                  <Col lg={4}>
-                     <Form.Group controlId="city">
-                        <Form.Label>City</Form.Label>
-                        <Form.Control
-                           type="text"
-                           name="city"
-                           value={formValues.city || ""}
-                           placeholder="Enter city name "
-                           onChange={handleChange}
-                           autoComplete="off"
-                        />
-                        <small className="error">
-                           {formValues.city === "" && formErrors.city}
-                        </small>
-                     </Form.Group>
-                  </Col>
-                  <Col lg={4}>
-                     <Form.Group controlId="post_code">
-                        <Form.Label>Post Code</Form.Label>
-                        <Form.Control
-                           type="text"
-                           name="post_code"
-                           value={formValues.post_code || ""}
-                           placeholder="Enter Post Code "
-                           onChange={handleChange}
-                           autoComplete="off"
-                        />
-                        <small className="error">
-                           {formValues.post_code === "" && formErrors.post_code}
-                        </small>
-                     </Form.Group>
-                  </Col>
-               </Row>
-               <Row className="mb-3">
                   <Col lg={6}>
                      <Form.Group controlId="address1">
                         <Form.Label>Address (1st line)</Form.Label>
@@ -951,6 +917,40 @@ const AddEmployee = (props) => {
                         <small className="error">
                            {formValues.address2 === "" &&
                               formErrors.address2}
+                        </small>
+                     </Form.Group>
+                  </Col>
+               </Row>
+               <Row className="mb-3">
+                  <Col lg={4}>
+                     <Form.Group controlId="city">
+                        <Form.Label>City</Form.Label>
+                        <Form.Control
+                           type="text"
+                           name="city"
+                           value={formValues.city || ""}
+                           placeholder="Enter city name "
+                           onChange={handleChange}
+                           autoComplete="off"
+                        />
+                        <small className="error">
+                           {formValues.city === "" && formErrors.city}
+                        </small>
+                     </Form.Group>
+                  </Col>
+                  <Col lg={4}>
+                     <Form.Group controlId="post_code">
+                        <Form.Label>Post Code</Form.Label>
+                        <Form.Control
+                           type="text"
+                           name="post_code"
+                           value={formValues.post_code || ""}
+                           placeholder="Enter Post Code "
+                           onChange={handleChange}
+                           autoComplete="off"
+                        />
+                        <small className="error">
+                           {formValues.post_code === "" && formErrors.post_code}
                         </small>
                      </Form.Group>
                   </Col>

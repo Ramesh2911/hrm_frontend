@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Link } from "react-router-dom";
 import Topbar from "../../src/components/common/Topbar";
 import MobileLogo from "../../src/components/common/MobileLogo";
 import Sidebar from "../../src/components/common/Sidebar";
@@ -59,14 +58,6 @@ const DashboardScreen = (props) => {
                   <div className="page-header-title">
                     <h5 className="m-b-10">Dashboard</h5>
                   </div>
-                </div>
-                <div className="col-md-6 text-end">
-                  <ul className="breadcrumb">
-                    <li className="breadcrumb-item">
-                      <Link to={"/dashboard"}>Dashboard</Link>
-                    </li>
-                    {/* <li className="breadcrumb-item">Document</li> */}
-                  </ul>
                 </div>
               </div>
             </div>

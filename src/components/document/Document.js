@@ -1,10 +1,19 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Button, Col, Form, Modal, Row } from 'react-bootstrap';
 import { toast, ToastContainer } from 'react-toastify';
-import { API_FETCH_DOCUMENTS, API_LIST_EMPLOYEES, API_UPLOAD_DOCUMENTS, API_WEB_DOMAIN } from '../../config/Api';
+import {
+   API_DELETE_DOCUMENTS,
+   API_DELETE_PROJECT,
+   API_FETCH_DOCUMENTS,
+   API_LIST_EMPLOYEES,
+   API_UPLOAD_DOCUMENTS,
+   API_WEB_DOMAIN
+}
+   from '../../config/Api';
 import DataTable from 'react-data-table-component';
 import DataTableSettings from '../../helpers/DataTableSettings';
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const Document = (props) => {
 
@@ -162,6 +171,47 @@ const Document = (props) => {
          });
    };
 
+   const handleDeleteClick = (id) => {
+      Swal.fire({
+         title: "Are you sure?",
+         text: "You won't be able to revert this!",
+         icon: "warning",
+         showCancelButton: true,
+         confirmButtonColor: "#3085d6",
+         cancelButtonColor: "#d33",
+         confirmButtonText: "Yes, delete it!"
+      }).then((result) => {
+         if (result.isConfirmed) {
+            setBtnEnable(true);
+
+            props.callRequest("DELETE", `${API_DELETE_DOCUMENTS}/${id}`, true)
+               .then((res) => {
+                  fetchDocuments();
+
+                  Swal.fire({
+                     title: "Deleted!",
+                     text: "Your file has been deleted.",
+                     icon: "success"
+                  });
+               })
+               .catch((e) => {
+                  setBtnEnable(false);
+                  if (e.response && e.response.data && e.response.data.error) {
+                     toast.error(e.response.data.error, {
+                        position: toast.POSITION.TOP_CENTER,
+                        autoClose: 5000,
+                     });
+                  } else {
+                     toast.error("Something went wrong. Please try again.", {
+                        position: toast.POSITION.TOP_CENTER,
+                        autoClose: 5000,
+                     });
+                  }
+               });
+         }
+      });
+   };
+
    const columns = [
       {
          name: <h5>Sender</h5>,
@@ -212,10 +262,7 @@ const Document = (props) => {
                >
                   <i className="la la-eye"></i>
                </Link>
-               <Link >
-                  <i className="la la-edit"></i>
-               </Link>
-               <Link>
+               <Link onClick={() => handleDeleteClick(row.id)}>
                   <i className="la la-trash"></i>
                </Link>
             </>

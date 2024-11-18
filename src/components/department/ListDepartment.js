@@ -4,12 +4,14 @@ import DataTable from "react-data-table-component";
 import DataTableSettings from "../../helpers/DataTableSettings";
 import {
    API_ADD_DEPARTMENT,
+   API_DELETE_DEPARTMENT,
    API_LIST_DEPARTMENT,
    API_UPDATE_DEPARTMENT
 }
    from '../../config/Api';
 import { toast, ToastContainer } from 'react-toastify';
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const ListDepartment = (props) => {
 
@@ -117,6 +119,48 @@ const ListDepartment = (props) => {
       handleNoticeToggle();
    };
 
+   const handleDeleteClick = (id) => {
+      Swal.fire({
+         title: "Are you sure?",
+         text: "You won't be able to revert this!",
+         icon: "warning",
+         showCancelButton: true,
+         confirmButtonColor: "#3085d6",
+         cancelButtonColor: "#d33",
+         confirmButtonText: "Yes, delete it!"
+      }).then((result) => {
+         if (result.isConfirmed) {
+            setBtnEnable(true);
+
+            props.callRequest("DELETE", `${API_DELETE_DEPARTMENT}/${id}`, true)
+               .then((res) => {
+
+                  fetchDepartment();
+
+                  Swal.fire({
+                     title: "Deleted!",
+                     text: "Your file has been deleted.",
+                     icon: "success"
+                  });
+               })
+               .catch((e) => {
+                  setBtnEnable(false);
+                  if (e.response && e.response.data && e.response.data.error) {
+                     toast.error(e.response.data.error, {
+                        position: toast.POSITION.TOP_CENTER,
+                        autoClose: 5000,
+                     });
+                  } else {
+                     toast.error("Something went wrong. Please try again.", {
+                        position: toast.POSITION.TOP_CENTER,
+                        autoClose: 5000,
+                     });
+                  }
+               });
+         }
+      });
+   };
+
    const columns = [
       {
          name: <h5>Name</h5>,
@@ -128,11 +172,6 @@ const ListDepartment = (props) => {
          selector: (row) => row.department_functionality,
          sortable: true,
       },
-      // {
-      //    name: <h5>Employees</h5>,
-      //    selector: (row) => props.getFormatedDate(row.ba_start_date),
-      //    sortable: true,
-      // },
       {
          name: <h6>Action</h6>,
          center: true,
@@ -141,7 +180,7 @@ const ListDepartment = (props) => {
                <Link onClick={() => handleEditClick(row)}>
                   <i className="la la-edit"></i>
                </Link>
-               <Link>
+               <Link onClick={() => handleDeleteClick(row.id)}>
                   <i className="la la-trash"></i>
                </Link>
             </>

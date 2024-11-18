@@ -5,6 +5,7 @@ import DataTableSettings from "../../helpers/DataTableSettings";
 import { toast, ToastContainer } from 'react-toastify';
 import {
    API_ADD_PAY_SLIPS,
+   API_DELETE_PAY_SLIPS,
    API_FETCH_PAY_SLIPS,
    API_LIST_EMPLOYEES,
    API_UPDATE_PAY_SLIPS,
@@ -12,6 +13,7 @@ import {
 }
    from '../../config/Api';
 import { Link } from 'react-router-dom';
+import Swal from "sweetalert2";
 
 const PaySlips = (props) => {
 
@@ -125,13 +127,17 @@ const PaySlips = (props) => {
 
       setBtnEnable(true);
 
+      const selectedEmployee = employeeData.find(
+         (employee) => employee.emp_id === formValues.send_to
+      );
+
       const formData = new FormData();
       formData.append('doc_file', formValues.doc_file);
       formData.append('send_to', formValues.send_to);
       formData.append('sender', 1);
       formData.append('date', new Date().toISOString());
-      formData.append('first_name', firstName);
-      formData.append('last_name', lastName);
+      formData.append('first_name', selectedEmployee.first_name);
+      formData.append('last_name', selectedEmployee.last_name);
 
       if (isEditMode) {
          formData.append('id', currentId);
@@ -178,6 +184,47 @@ const PaySlips = (props) => {
       setCurrentId(PaySlips.id);
       setIsEditMode(true);
       handleToggle();
+   };
+
+   const handleDeleteClick = (id) => {
+      Swal.fire({
+         title: "Are you sure?",
+         text: "You won't be able to revert this!",
+         icon: "warning",
+         showCancelButton: true,
+         confirmButtonColor: "#3085d6",
+         cancelButtonColor: "#d33",
+         confirmButtonText: "Yes, delete it!"
+      }).then((result) => {
+         if (result.isConfirmed) {
+            setBtnEnable(true);
+
+            props.callRequest("DELETE", `${API_DELETE_PAY_SLIPS}/${id}`, true)
+               .then((res) => {
+                  fetchPaySlips();
+
+                  Swal.fire({
+                     title: "Deleted!",
+                     text: "Your file has been deleted.",
+                     icon: "success"
+                  });
+               })
+               .catch((e) => {
+                  setBtnEnable(false);
+                  if (e.response && e.response.data && e.response.data.error) {
+                     toast.error(e.response.data.error, {
+                        position: toast.POSITION.TOP_CENTER,
+                        autoClose: 5000,
+                     });
+                  } else {
+                     toast.error("Something went wrong. Please try again.", {
+                        position: toast.POSITION.TOP_CENTER,
+                        autoClose: 5000,
+                     });
+                  }
+               });
+         }
+      });
    };
 
    const columns = [
@@ -232,7 +279,7 @@ const PaySlips = (props) => {
                      >
                         <i className="la la-edit"></i>
                      </Link>
-                     <Link to="#">
+                     <Link onClick={() => handleDeleteClick(row.id)}>
                         <i className="la la-trash"></i>
                      </Link>
                   </>

@@ -2,14 +2,14 @@ import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import {
-  API_GET_NOTIFICATIONS
+  API_GET_NOTIFICATION
 }
   from "../../config/Api";
 import axios from "axios";
 import { Modal } from "react-bootstrap";
+import moment from "moment";
 
 function Topbar(props) {
-
   const empId = localStorage.getItem("emp_id");
   const isDefaultPwd = localStorage.getItem("is_default_pwd");
   const isClickable = isDefaultPwd === "1";
@@ -21,7 +21,15 @@ function Topbar(props) {
   const [data, setData] = useState([]);
   const [notificationCount, setNotificationCount] = useState(0);
   const [showData, setShowData] = useState(false);
-  const handleToggle = () => setShowData(!showData);
+  const handleToggle = () => {
+    setShowData(!showData);
+
+    // Clear notification count when modal is opened
+    if (!showData && notificationCount > 0) {
+      setNotificationCount(0);
+    }
+  };
+
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -44,13 +52,27 @@ function Topbar(props) {
 
 
   useEffect(() => {
-    fetchNotification();
-  }, []);
+    if (roleName) {
+      fetchNotification();
+    }
+  }, [roleName]);
 
+  const getFormatedDate = (datetime, format = "DD/MM/YYYY") => {
+    const dateTime = moment(datetime);
+    if (!dateTime.isValid()) {
+      return "Invalid date"; // Handle invalid date
+    }
+    return dateTime.format(format); // Format the date using Moment.js
+  };
 
   const fetchNotification = async () => {
     try {
-      const response = await axios.get(API_GET_NOTIFICATIONS);
+      const queryParams = new URLSearchParams({
+        role: roleName,
+        ...(roleName === 'EMPLOYEE' && { emp_id: empId })
+      }).toString();
+
+      const response = await axios.get(`${API_GET_NOTIFICATION}?${queryParams}`);
       const sortedData = response.data.notifications.sort((a, b) => new Date(b.date) - new Date(a.date));
       setData(sortedData);
       setNotificationCount(response.data.count);
@@ -85,7 +107,6 @@ function Topbar(props) {
           <h1 className="m-0">HR Management System</h1>
         </div>
         <div className="ms-auto">
-
 
           <div style={{ position: 'relative', display: 'inline-block', marginTop: '15px' }}>
             <i className="las la-bell"
@@ -130,7 +151,7 @@ function Topbar(props) {
                     data.map((notification, index) => (
                       <li key={index} className="d-flex justify-content-between">
                         <span>{notification.message}</span>
-                        <span className="notification-date text-muted">{notification.date}</span>
+                        <span className="notification-date text-muted">{getFormatedDate(notification.date)}</span>
                       </li>
                     ))
                   ) : (

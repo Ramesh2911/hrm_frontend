@@ -5,12 +5,14 @@ import DataTableSettings from "../../helpers/DataTableSettings";
 import { toast, ToastContainer } from 'react-toastify';
 import {
    API_ADD_DESIGNATION,
+   API_DELETE_DESIGNATION,
    API_LIST_DEPARTMENT,
    API_LIST_DESIGNATION,
    API_UPDATE_DESIGNATION
 }
    from '../../config/Api';
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const ListDesignation = (props) => {
 
@@ -132,6 +134,48 @@ const ListDesignation = (props) => {
       handleNoticeToggle();
    };
 
+   const handleDeleteClick = (id) => {
+      Swal.fire({
+         title: "Are you sure?",
+         text: "You won't be able to revert this!",
+         icon: "warning",
+         showCancelButton: true,
+         confirmButtonColor: "#3085d6",
+         cancelButtonColor: "#d33",
+         confirmButtonText: "Yes, delete it!"
+      }).then((result) => {
+         if (result.isConfirmed) {
+            setBtnEnable(true);
+
+            props.callRequest("DELETE", `${API_DELETE_DESIGNATION}/${id}`, true)
+               .then((res) => {
+
+                  fetchDesignation();
+
+                  Swal.fire({
+                     title: "Deleted!",
+                     text: "Your file has been deleted.",
+                     icon: "success"
+                  });
+               })
+               .catch((e) => {
+                  setBtnEnable(false);
+                  if (e.response && e.response.data && e.response.data.error) {
+                     toast.error(e.response.data.error, {
+                        position: toast.POSITION.TOP_CENTER,
+                        autoClose: 5000,
+                     });
+                  } else {
+                     toast.error("Something went wrong. Please try again.", {
+                        position: toast.POSITION.TOP_CENTER,
+                        autoClose: 5000,
+                     });
+                  }
+               });
+         }
+      });
+   };
+
    const columns = [
       {
          name: <h5>Designation Name</h5>,
@@ -154,7 +198,7 @@ const ListDesignation = (props) => {
                <Link onClick={() => handleEditClick(row)}>
                   <i className="la la-edit"></i>
                </Link>
-               <Link>
+               <Link onClick={() => handleDeleteClick(row.id)}>
                   <i className="la la-trash"></i>
                </Link>
             </>
