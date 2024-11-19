@@ -4,12 +4,13 @@ import DataTable from "react-data-table-component";
 import DataTableSettings from "../../helpers/DataTableSettings";
 import { Link, useNavigate } from 'react-router-dom';
 import {
-API_DELETE_EMPLOYEE,
-API_LIST_DESIGNATION,
-API_LIST_EMPLOYEES
+   API_DELETE_EMPLOYEE,
+   API_LIST_DESIGNATION,
+   API_LIST_EMPLOYEES
 }
    from '../../config/Api';
 import Swal from 'sweetalert2';
+import { toast } from 'react-toastify';
 
 const ListEmployee = (props) => {
 
@@ -83,7 +84,6 @@ const ListEmployee = (props) => {
                   });
                })
                .catch((e) => {
-                  setBtnEnable(false);
                   if (e.response && e.response.data && e.response.data.error) {
                      toast.error(e.response.data.error, {
                         position: toast.POSITION.TOP_CENTER,
