@@ -3,7 +3,13 @@ import { Button, Col, Form, Row } from 'react-bootstrap';
 import DataTable from "react-data-table-component";
 import DataTableSettings from "../../helpers/DataTableSettings";
 import { Link, useNavigate } from 'react-router-dom';
-import { API_LIST_DESIGNATION, API_LIST_EMPLOYEES } from '../../config/Api';
+import {
+API_DELETE_EMPLOYEE,
+API_LIST_DESIGNATION,
+API_LIST_EMPLOYEES
+}
+   from '../../config/Api';
+import Swal from 'sweetalert2';
 
 const ListEmployee = (props) => {
 
@@ -51,6 +57,47 @@ const ListEmployee = (props) => {
    const getPositionName = (designationId) => {
       const designation = designationData.find(d => d.id === Number(designationId));
       return designation ? designation.designation_name : "Unknown";
+   };
+
+   const handleDeleteClick = (email) => {
+      Swal.fire({
+         title: "Are you sure?",
+         text: "You won't be able to revert this!",
+         icon: "warning",
+         showCancelButton: true,
+         confirmButtonColor: "#3085d6",
+         cancelButtonColor: "#d33",
+         confirmButtonText: "Yes, delete it!"
+      }).then((result) => {
+         if (result.isConfirmed) {
+
+            props.callRequest("DELETE", `${API_DELETE_EMPLOYEE}/${email}`, true)
+               .then((res) => {
+
+                  fetchEmployee();
+
+                  Swal.fire({
+                     title: "Deleted!",
+                     text: "Your file has been deleted.",
+                     icon: "success"
+                  });
+               })
+               .catch((e) => {
+                  setBtnEnable(false);
+                  if (e.response && e.response.data && e.response.data.error) {
+                     toast.error(e.response.data.error, {
+                        position: toast.POSITION.TOP_CENTER,
+                        autoClose: 5000,
+                     });
+                  } else {
+                     toast.error("Something went wrong. Please try again.", {
+                        position: toast.POSITION.TOP_CENTER,
+                        autoClose: 5000,
+                     });
+                  }
+               });
+         }
+      });
    };
 
    const columns = [
@@ -154,7 +201,7 @@ const ListEmployee = (props) => {
                <Link to={`/employee/edit/${row.emp_id}`}>
                   <i className="la la-edit"></i>
                </Link>
-               <Link>
+               <Link onClick={() => handleDeleteClick(row.email)}>
                   <i className="la la-trash"></i>
                </Link>
             </>

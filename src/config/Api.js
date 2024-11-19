@@ -20,6 +20,7 @@ export const API_ADD_EMPLOYEE = API_DOMAIN + "/add-employee";
 export const API_LIST_EMPLOYEES = API_DOMAIN + "/employees";
 export const API_EMPLOYEES_VIEW = API_DOMAIN + "/employee/view";
 export const API_UPDATE_EMPLOYEE = API_DOMAIN + "/update-employee";
+export const API_DELETE_EMPLOYEE = API_DOMAIN + "/delete/employee";
 
 //Project
 export const API_ADD_PROJECT = API_DOMAIN + "/add-project";
