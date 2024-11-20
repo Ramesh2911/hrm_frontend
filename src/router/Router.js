@@ -16,7 +16,6 @@ import EditEmployeeScreen from "../screens/manageEmployee/EditEmployeeScreen";
 //Project
 import ListProjectScreen from "../screens/project/ListProjectScreen";
 
-
 //Department
 import ListDepartmentScreen from "../screens/department/ListDepartmentScreen";
 
@@ -35,6 +34,7 @@ import DocumentScreen from "../screens/document/DocumentScreen";
 import ChangePasswordScreen from "../screens/authentication/ChangePasswordScreen";
 import PaySlipsScreen from "../screens/paySlips/paySlipsScreen";
 import P60Screen from "../screens/p60/p60Screen";
+import LeaveDetailsScreen from "../screens/leave/LeaveDetailsScreen";
 
 
 
@@ -61,6 +61,7 @@ export default function Router(props) {
             <Route path="/department" element={<ListDepartmentScreen {...props} />} />
             <Route path="/designation" element={<ListDesignationScreen {...props} />} />
             <Route path="/leaves" element={<ListLeaveScreen {...props} />} />
+            <Route path="/leaves-details" element={<LeaveDetailsScreen {...props} />} />
             <Route exact path="/attendance" element={<AttendanceScreen {...props} />} />
             <Route exact path="/project" element={<ListProjectScreen {...props} />} />
             <Route exact path="/document" element={<DocumentScreen {...props} />} />

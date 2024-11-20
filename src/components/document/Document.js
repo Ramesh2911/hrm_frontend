@@ -73,11 +73,17 @@ const Document = (props) => {
          }).toString();
 
          const res = await props.callRequest("GET", `${API_FETCH_DOCUMENTS}?${queryParams}`, true);
-         const sortedData = res.data?.data?.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-         setDocumentData(sortedData);
+
+         if (res.data?.data?.length > 0) {
+            const sortedData = res.data.data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+            setDocumentData(sortedData);
+         } else {
+            setDocumentData([]);
+         }
+
          setLoadingIndicator(false);
-      } catch (e) {
-         console.log(e);
+      } catch (error) {
+         console.error('Error fetching documents:', error);
          toast.error('Error fetching documents');
       }
    };

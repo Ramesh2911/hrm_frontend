@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {
    API_DEPARTMENT_COUNT,
    API_DESIGNATION_COUNT,
-   API_EMPLOYEE_STATUS,
+   API_EMPLOYEES_COUNT,
    API_FETCH_EMPLOYEE,
    API_LIST_DEPARTMENT,
    API_LIST_DESIGNATION,
@@ -60,7 +60,7 @@ const Dashboard = (props) => {
    }, [roleName]);
 
    const fetchEmpCount = () => {
-      props.callRequest("GET", API_EMPLOYEE_STATUS, true, null)
+      props.callRequest("GET", API_EMPLOYEES_COUNT, true, null)
          .then((res) => {
             const result = res?.data?.data;
             setEmpCount(result);

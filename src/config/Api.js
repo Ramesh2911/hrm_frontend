@@ -9,7 +9,7 @@ export const API_CHANGE_PASSWORD = API_DOMAIN + "/change-password";
 export const API_FORGOT_PASSWORD = API_DOMAIN + "/forgot-password";
 
 //Dashboard
-export const API_EMPLOYEE_STATUS = API_DOMAIN + "/employee-status";
+export const API_EMPLOYEES_COUNT = API_DOMAIN + "/employees-count";
 export const API_PROJECTS_COUNT = API_DOMAIN + "/projects-count";
 export const API_DEPARTMENT_COUNT = API_DOMAIN + "/departments-count";
 export const API_DESIGNATION_COUNT = API_DOMAIN + "/designation-count";
@@ -55,6 +55,7 @@ export const API_LIST_LEAVES = API_DOMAIN + "/list-leaves";
 export const API_ALL_LEAVES = API_DOMAIN + "/all-leaves";
 export const API_APPROVE_LEAVES = API_DOMAIN + "/approve-leave";
 export const API_REJECT_LEAVES = API_DOMAIN + "/reject-leave";
+export const API_ALL_EMPLOYEE_LEAVES = API_DOMAIN + "/all-employee/leaves";
 
 //Document
 export const API_UPLOAD_DOCUMENTS = API_DOMAIN + "/upload-document";

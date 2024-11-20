@@ -103,7 +103,6 @@ const EditEmployee = (props) => {
    ];
 
    const statusOption = [
-      // { label: "Select", value: "" },
       { label: "Active", value: "1" },
       { label: "Job Left", value: "2" },
       { label: "Suspended", value: "3" },

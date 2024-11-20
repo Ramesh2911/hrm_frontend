@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 import Topbar from "../../components/common/Topbar";
 import MobileLogo from "../../components/common/MobileLogo";
 import Sidebar from "../../components/common/Sidebar";
-import ListLeave from '../../components/leave/ListLeave';
+import LeavesDetails from '../../components/leave/LeavesDetails';
 
-const ListLeaveScreen = (props) => {
+const LeaveDetailsScreen = (props) => {
    const [showTopbar, setShowTopbar] = useState(false);
    const [showSidebar, setShowSidebar] = useState(false);
    const [changeIcon, setChangeIcon] = useState(false);
@@ -58,7 +58,7 @@ const ListLeaveScreen = (props) => {
                      <div className="row align-items-center">
                         <div className="col-md-6">
                            <div className="page-header-title">
-                              <h5 className="m-b-10">Leave</h5>
+                              <h5 className="m-b-10">All Employee Leave Details</h5>
                            </div>
                         </div>
                         <div className="col-md-6 text-end">
@@ -74,7 +74,7 @@ const ListLeaveScreen = (props) => {
                </div>
                <div className="row">
                   <div className="col-sm-12">
-                     <ListLeave {...props} />
+                     <LeavesDetails {...props} />
                   </div>
                </div>
             </div>
@@ -83,4 +83,4 @@ const ListLeaveScreen = (props) => {
    );
 };
 
-export default ListLeaveScreen;
+export default LeaveDetailsScreen;

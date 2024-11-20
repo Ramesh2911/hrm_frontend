@@ -44,13 +44,42 @@ function AdminSidebar(props) {
           </div>
         </Link>
       </li>
-      <li className="pc-item pc-hasmenu active">
-        <Link to="/leaves" className="pc-link ">
+      <li className="pc-item pc-hasmenu">
+        <a className="pc-link ">
           <div className="d-flex align-items-center">
-            <i className="las la-door-open"></i>
-            <span className="ms-3">Leaves</span>
+            <i className="las la-building"></i>
+            <span
+              className="ms-3"
+              data-bs-toggle="collapse"
+              href="#leave"
+              role="button"
+              aria-expanded="false"
+              aria-controls="collapseExample"
+            >
+              Leaves
+            </span>
           </div>
-        </Link>
+        </a>
+        <ul
+          className="pc-submenu accordion-collapse  collapse"
+          id="leave"
+          aria-labelledby="headingOne"
+          data-bs-parent="#accordionExample"
+        >
+          <li className="pc-item">
+            <Link
+              to="/leaves-details"
+              className="pc-link"
+            >
+              Leaves Details
+            </Link>
+          </li>
+          <li className="pc-item">
+            <Link to="/leaves" className="pc-link">
+              All leaves
+            </Link>
+          </li>
+        </ul>
       </li>
       <li className="pc-item pc-hasmenu">
         <a className="pc-link ">
