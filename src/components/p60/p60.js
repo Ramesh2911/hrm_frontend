@@ -268,9 +268,6 @@ const P60 = (props) => {
                </Link>
                {roleName === 'ADMIN' && (
                   <>
-                     <Link onClick={() => handleEditClick(row)}>
-                        <i className="la la-edit"></i>
-                     </Link>
                      <Link onClick={() => handleDeleteClick(row.id)}>
                         <i className="la la-trash"></i>
                      </Link>

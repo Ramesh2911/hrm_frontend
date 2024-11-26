@@ -96,6 +96,12 @@ const ViewEmployee = (props) => {
                                  src={`${API_WEB_DOMAIN}/${empData.emp_pic}`}
                                  alt=""
                                  className="admission-profile-thumb me-3"
+                                 style={{
+                                    width: '120px',
+                                    height: '120px',
+                                    objectFit: 'cover',
+                                    borderRadius: '50%'
+                                 }}
                               />
                               <div className="ms-3">
                                  <h4 className="fw-bold m-0 me-2">
@@ -216,14 +222,14 @@ const ViewEmployee = (props) => {
                      </div>
                      <div className="row border-bottom pb-3">
                         <div className="col-xl-3 col-sm-6 mt-4">
-                           <h5 className="fw-bold text-muted">Salary Type</h5>
+                           <h5 className="fw-bold text-muted">Salary Period</h5>
                            <span>{empData?.salary_option}</span>
                         </div>
                         <div className="col-xl-3 col-sm-6 mt-4">
                            <h5 className="fw-bold text-muted">
                               Salary
                            </h5>
-                           <span>{props.getCurrencyFormat(empData?.salary)}</span>
+                           <span> £ {empData?.salary}</span>
                         </div>
                         <div className="col-xl-3 col-sm-6 mt-4">
                            <h5 className="fw-bold text-muted">Probation Period</h5>

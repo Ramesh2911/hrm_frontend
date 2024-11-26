@@ -74,10 +74,17 @@ const ListProject = (props) => {
       if (isNaN(start) || isNaN(end)) {
          return "Invalid dates";
       }
-      const diffTime = Math.abs(end - start);
-      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-      return `${diffDays} days`;
+      let months = (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth());
+      let days = end.getDate() - start.getDate();
+
+      if (days < 0) {
+         months -= 1;
+         const prevMonth = new Date(end.getFullYear(), end.getMonth(), 0);
+         days += prevMonth.getDate();
+      }
+
+      return `${months} months ${days} days`;
    };
 
    const getEmployeeName = (assignedTo) => {

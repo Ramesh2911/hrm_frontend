@@ -110,7 +110,7 @@ const EditEmployee = (props) => {
    ];
 
    const salaryOption = [
-      { label: "Select Salary Type", value: "" },
+      { label: "Select Salary Period", value: "" },
       { label: "ANNUAL", value: "Annual" },
       { label: "MONTHLY", value: "Monthly" },
       { label: "DAILY", value: "Daily" },
@@ -660,7 +660,7 @@ const EditEmployee = (props) => {
                   </Col>
                   <Col lg={4}>
                      <Form.Group controlId="salary_option">
-                        <Form.Label>Salary Type</Form.Label>
+                        <Form.Label>Salary Period</Form.Label>
                         <select
                            className="form-select"
                            aria-label="Select Salary"

@@ -76,3 +76,4 @@ export const API_DELETE_P60 = API_DOMAIN + "/delete/p60";
 
 //Notification
 export const API_GET_NOTIFICATION = API_DOMAIN + "/get-notification";
+export const API_UPDATE_NOTIFICATION = API_DOMAIN + "/update-notification";

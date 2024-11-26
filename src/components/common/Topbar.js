@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import {
-  API_GET_NOTIFICATION
+  API_GET_NOTIFICATION,
+  API_UPDATE_NOTIFICATION
 }
   from "../../config/Api";
 import axios from "axios";
@@ -21,15 +22,28 @@ function Topbar(props) {
   const [data, setData] = useState([]);
   const [notificationCount, setNotificationCount] = useState(0);
   const [showData, setShowData] = useState(false);
-  const handleToggle = () => {
+  const handleToggle = async () => {
     setShowData(!showData);
 
-    // Clear notification count when modal is opened
+    if (!showData && data.length > 0) {
+      const notificationIds = data.map((notification) => notification.id);
+
+      try {
+        await axios.put(`${API_UPDATE_NOTIFICATION}`, { notificationIds });
+        const updatedData = data.map((notification) => ({
+          ...notification,
+          status: 1,
+        }));
+        setData(updatedData);
+      } catch (error) {
+        console.error('Error updating notification statuses:', error);
+      }
+    }
+
     if (!showData && notificationCount > 0) {
       setNotificationCount(0);
     }
   };
-
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -60,9 +74,9 @@ function Topbar(props) {
   const getFormatedDate = (datetime, format = "DD/MM/YYYY") => {
     const dateTime = moment(datetime);
     if (!dateTime.isValid()) {
-      return "Invalid date"; // Handle invalid date
+      return "Invalid date";
     }
-    return dateTime.format(format); // Format the date using Moment.js
+    return dateTime.format(format);
   };
 
   const fetchNotification = async () => {
@@ -148,8 +162,8 @@ function Topbar(props) {
               <Modal.Body>
                 <ul className="list-unstyled">
                   {data.length > 0 ? (
-                    data.map((notification, index) => (
-                      <li key={index} className="d-flex justify-content-between">
+                    data.map((notification, i) => (
+                      <li key={i} className="d-flex justify-content-between">
                         <span>{notification.message}</span>
                         <span className="notification-date text-muted">{getFormatedDate(notification.date)}</span>
                       </li>

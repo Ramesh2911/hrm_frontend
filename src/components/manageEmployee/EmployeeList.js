@@ -141,13 +141,16 @@ const ListEmployee = (props) => {
          selector: (row) => {
             const expiryDate = new Date(row.passport_expiry_date);
             const currentDate = new Date();
+
             const diffInMonths = (expiryDate.getFullYear() - currentDate.getFullYear()) * 12
                + (expiryDate.getMonth() - currentDate.getMonth());
-            const backgroundColor = diffInMonths <= 1
-               ? 'red'
-               : diffInMonths <= 3
-                  ? 'yellow'
-                  : 'transparent';
+
+            let backgroundColor = 'transparent';
+            if (diffInMonths <= 1) {
+               backgroundColor = 'red';
+            } else if (diffInMonths <= 3) {
+               backgroundColor = 'yellow';
+            }
 
             return (
                <span style={{
@@ -167,13 +170,15 @@ const ListEmployee = (props) => {
          selector: (row) => {
             const expiryDate = new Date(row.visa_expiry_date);
             const currentDate = new Date();
+
             const diffInMonths = (expiryDate.getFullYear() - currentDate.getFullYear()) * 12
                + (expiryDate.getMonth() - currentDate.getMonth());
-            const backgroundColor = diffInMonths <= 1
-               ? 'red'
-               : diffInMonths <= 3
-                  ? 'yellow'
-                  : 'transparent';
+            let backgroundColor = 'transparent';
+            if (diffInMonths <= 1) {
+               backgroundColor = 'red';
+            } else if (diffInMonths <= 3) {
+               backgroundColor = 'yellow';
+            }
 
             return (
                <span style={{
