@@ -36,11 +36,11 @@ const Attendance = (props) => {
       month: "",
    };
 
-   useEffect(() => {
-      if (roleName === 'EMPLOYEE') {
-         fetchAttendance();
-      }
-   }, [roleName]);
+   // useEffect(() => {
+   //    if (roleName === 'EMPLOYEE') {
+   //       fetchAttendance();
+   //    }
+   // }, [roleName]);
 
    useEffect(() => {
       if (roleName === 'ADMIN') {
@@ -80,6 +80,10 @@ const Attendance = (props) => {
    const handleToggle = () => setShow(!show);
 
    const calculateTotalHours = (loginTime, logoutTime) => {
+      if (!logoutTime) {
+         return 0.00;
+      }
+
       const login = new Date(`1970-01-01T${loginTime}:00`);
       const logout = new Date(`1970-01-01T${logoutTime}:00`);
 
@@ -91,7 +95,9 @@ const Attendance = (props) => {
       const totalMinutes = Math.floor(diffInMilliseconds / (1000 * 60));
       const hours = Math.floor(totalMinutes / 60);
 
-      return hours + (totalMinutes % 60) / 60;
+      const roundedHours = Math.round((hours + (totalMinutes % 60) / 60) * 100) / 100;
+
+      return roundedHours;
    };
 
    const calculateDays = (loginTime, logoutTime) => {
@@ -458,7 +464,7 @@ const Attendance = (props) => {
                   <div className="d-flex justify-content-end">
                      {roleName === "EMPLOYEE" && (
                         <div>
-                           {/* {!close ? (
+                           {!close ? (
                               <Button
                                  className="link-action"
                                  onClick={() => {
@@ -487,7 +493,7 @@ const Attendance = (props) => {
                               >
                                  <i className="las la-times me-2"></i>Filter
                               </Button>
-                           )} */}
+                           )}
                            <Button
                               className="link-action ms-3"
                               onClick={() => {
@@ -594,6 +600,7 @@ const Attendance = (props) => {
                                  name="attendance_date"
                                  value={formValues.attendance_date || ""}
                                  onChange={handleChange}
+                                 max={new Date().toISOString().split('T')[0]}
                                  autoComplete="off"
                               />
                               <small className="error">
@@ -628,22 +635,34 @@ const Attendance = (props) => {
                         </Button>
                      </Modal.Footer>
                   </Modal>
-                  <DataTable
-                     columns={columns}
-                     data={DataTableSettings.filterItems(
-                        attendanceData,
-                        searchParam,
-                        filterText
+                  <div className="card-body">
+                     {filterData?.data?.length > 0 ? (
+                        <Table striped bordered hover>
+                           <thead>
+                              <tr>
+                                 <th>Date</th>
+                                 <th>Log In Time</th>
+                                 <th>Log Out Time</th>
+                                 <th>Total Hours</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              {filterData?.data?.map((item) => (
+                                 <tr key={props.getFormatedDate(item.attendance_date)}>
+                                    <td>{props.getFormatedDate(item.attendance_date)}</td>
+                                    <td>{item.attendance_login_time}</td>
+                                    <td>{item.attendance_logout_time}</td>
+                                    <td>{calculateTotalHours(item.attendance_login_time, item.attendance_logout_time)}</td>
+                                 </tr>
+                              ))}
+                           </tbody>
+                        </Table>
+                     ) : (
+                        <div className="d-flex justify-content-center align-items-center p-2">
+                           No records to display
+                        </div>
                      )}
-                     pagination
-                     paginationPerPage={DataTableSettings.paginationPerPage}
-                     paginationRowsPerPageOptions={DataTableSettings.paginationRowsPerPageOptions}
-                     progressPending={loadingIndicator}
-                     subHeader
-                     fixedHeaderScrollHeight="400px"
-                     subHeaderComponent={subHeaderComponentMemo}
-                     persistTableHead
-                  />
+                  </div>
                </div>
             </div>
          ) : (
@@ -808,6 +827,7 @@ const Attendance = (props) => {
                                        name="attendance_date"
                                        value={formValues.attendance_date || ""}
                                        onChange={handleChange}
+                                       max={new Date().toISOString().split('T')[0]}
                                        autoComplete="off"
                                     />
                                     <small className="error">
