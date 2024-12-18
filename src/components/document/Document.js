@@ -262,22 +262,27 @@ const Document = (props) => {
          cell: (row) => (
             <>
                <button
-                  style={{ marginRight: '10px' }}
-                  onClick={(e) => {
+                  style={{
+                     marginRight: '10px',
+                     backgroundColor: '#007bff',
+                     color: '#fff',
+                     border: 'none',
+                     borderRadius: '4px',
+                     padding: '5px 10px',
+                     cursor: 'pointer',
+                  }}
+                  onClick={() => {
+                     const fileName = row.doc_file.split('-').slice(1).join('-');
+                     const blob = new Blob([row.doc_file_content], { type: 'application/octet-stream' });
                      const link = document.createElement('a');
-                     link.href = `${API_WEB_DOMAIN}/${row.doc_file}`;
-                     link.download = row.doc_file.split('-').slice(1).join('-');
-                     link.target = '_self';
+                     link.href = URL.createObjectURL(blob);
+                     link.setAttribute('download', fileName);
                      document.body.appendChild(link);
                      link.click();
                      document.body.removeChild(link);
-                  }}
-               >
+                  }}>
                   <i className="la la-download"></i>
                </button>
-
-
-
                <Link
                   to={`${API_WEB_DOMAIN}/${row.doc_file}`}
                   target="_blank"

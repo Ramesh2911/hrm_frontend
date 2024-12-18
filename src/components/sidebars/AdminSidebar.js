@@ -4,7 +4,7 @@ function AdminSidebar(props) {
 
   return (
     <div className="accordion" id="accordionExample">
-      <li className="pc-item pc-hasmenu active">
+      <li className="pc-item pc-hasmenu active list-unstyled">
         <Link to="/dashboard" className="pc-link ">
           <div className="d-flex align-items-center">
             <i className="las la-tachometer-alt"></i>
@@ -12,7 +12,7 @@ function AdminSidebar(props) {
           </div>
         </Link>
       </li>
-      <li className="pc-item pc-hasmenu active">
+      <li className="pc-item pc-hasmenu active list-unstyled">
         <Link to="/employees" className="pc-link ">
           <div className="d-flex align-items-center">
             <i className="las la-users"></i>
@@ -20,7 +20,7 @@ function AdminSidebar(props) {
           </div>
         </Link>
       </li>
-      <li className="pc-item pc-hasmenu active">
+      <li className="pc-item pc-hasmenu active list-unstyled">
         <Link to="/document" className="pc-link ">
           <div className="d-flex align-items-center">
             <i className="las la-file"></i>
@@ -28,7 +28,7 @@ function AdminSidebar(props) {
           </div>
         </Link>
       </li>
-      <li className="pc-item pc-hasmenu active">
+      <li className="pc-item pc-hasmenu active list-unstyled">
         <Link to="/project" className="pc-link ">
           <div className="d-flex align-items-center">
             <i className="las la-briefcase"></i>
@@ -36,7 +36,7 @@ function AdminSidebar(props) {
           </div>
         </Link>
       </li>
-      <li className="pc-item pc-hasmenu active">
+      <li className="pc-item pc-hasmenu active list-unstyled">
         <Link to="/attendance" className="pc-link ">
           <div className="d-flex align-items-center">
             <i className="las la-user-check"></i>
@@ -44,7 +44,7 @@ function AdminSidebar(props) {
           </div>
         </Link>
       </li>
-      <li className="pc-item pc-hasmenu">
+      <li className="pc-item pc-hasmenu list-unstyled">
         <a className="pc-link ">
           <div className="d-flex align-items-center">
             <i className="las la-building"></i>
@@ -81,7 +81,7 @@ function AdminSidebar(props) {
           </li>
         </ul>
       </li>
-      <li className="pc-item pc-hasmenu">
+      <li className="pc-item pc-hasmenu list-unstyled">
         <a className="pc-link ">
           <div className="d-flex align-items-center">
             <i className="las la-building"></i>
@@ -118,7 +118,7 @@ function AdminSidebar(props) {
           </li>
         </ul>
       </li>
-      <li className="pc-item pc-hasmenu">
+      <li className="pc-item pc-hasmenu list-unstyled">
         <a className="pc-link ">
           <div className="d-flex align-items-center">
             <i className="las la-user"></i>

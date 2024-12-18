@@ -6,7 +6,7 @@ function EmployeeSidebar(props) {
 
   return (
     <div className="accordion" id="accordionExample">
-      <li className="pc-item pc-hasmenu active">
+      <li className="pc-item pc-hasmenu active list-unstyled">
         {isClickable ? (
           <Link to="/dashboard" className="pc-link">
             <div className="d-flex align-items-center">
@@ -23,7 +23,7 @@ function EmployeeSidebar(props) {
           </div>
         )}
       </li>
-      <li className="pc-item pc-hasmenu active">
+      <li className="pc-item pc-hasmenu active list-unstyled">
         {isClickable ? (
           <Link to="/attendance" className="pc-link">
             <div className="d-flex align-items-center">
@@ -40,7 +40,7 @@ function EmployeeSidebar(props) {
           </div>
         )}
       </li>
-      <li className="pc-item pc-hasmenu active">
+      <li className="pc-item pc-hasmenu active list-unstyled">
         {isClickable ? (
           <Link to="/leaves" className="pc-link">
             <div className="d-flex align-items-center">
@@ -57,7 +57,7 @@ function EmployeeSidebar(props) {
           </div>
         )}
       </li>
-      <li className="pc-item pc-hasmenu active">
+      <li className="pc-item pc-hasmenu active list-unstyled">
         {isClickable ? (
           <Link to="/document" className="pc-link">
             <div className="d-flex align-items-center">
@@ -74,7 +74,7 @@ function EmployeeSidebar(props) {
           </div>
         )}
       </li>
-      <li className={`pc-item pc-hasmenu ${isClickable ? "" : "disabled"}`}>
+      <li className={`pc-item pc-hasmenu ${isClickable ? "" : "disabled"} list-unstyled`}>
         {isClickable ? (
           <a className="pc-link">
             <div className="d-flex align-items-center">
