@@ -241,7 +241,7 @@ const ListDepartment = (props) => {
                      </Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
-                     <Form>
+                     <Form onSubmit={handleSubmit}>
                         <Form.Group className="mb-3" controlId="department_name">
                            <Form.Label>Department Name</Form.Label>
                            <Form.Control
@@ -272,17 +272,17 @@ const ListDepartment = (props) => {
                               {formValues.department_functionality === "" && formErrors.department_functionality}
                            </small>
                         </Form.Group>
+                        <div className="d-flex justify-content-end">
+                           <Button
+                              type="submit"
+                              disabled={btnEnable}
+                              variant="primary"
+                           >
+                              {isEditMode ? "Update" : "Save"}
+                           </Button>
+                        </div>
                      </Form>
                   </Modal.Body>
-                  <Modal.Footer>
-                     <Button
-                        disabled={btnEnable ? true : false}
-                        variant="primary"
-                        onClick={handleSubmit}
-                     >
-                        {isEditMode ? "Update" : "Save"}
-                     </Button>
-                  </Modal.Footer>
                </Modal>
                <DataTable
                   columns={columns}

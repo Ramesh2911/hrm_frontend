@@ -259,7 +259,7 @@ const ListDesignation = (props) => {
                      </Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
-                     <Form>
+                     <Form onSubmit={handleSubmit}>
                         <Form.Group className="mb-3" controlId="designation_name">
                            <Form.Label>Designation Name</Form.Label>
                            <Form.Control
@@ -297,17 +297,17 @@ const ListDesignation = (props) => {
                               {formValues.department === "" && formErrors.department}
                            </small>
                         </Form.Group>
+                        <div className="d-flex justify-content-end">
+                           <Button
+                              type="submit"
+                              disabled={btnEnable}
+                              variant="primary"
+                           >
+                              {isEditMode ? "Update" : "Save"}
+                           </Button>
+                        </div>
                      </Form>
                   </Modal.Body>
-                  <Modal.Footer>
-                     <Button
-                        disabled={btnEnable ? true : false}
-                        variant="primary"
-                        onClick={handleSubmit}
-                     >
-                        {isEditMode ? "Update" : "Save"}
-                     </Button>
-                  </Modal.Footer>
                </Modal>
                <DataTable
                   columns={columns}

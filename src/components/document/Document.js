@@ -261,6 +261,23 @@ const Document = (props) => {
          center: true,
          cell: (row) => (
             <>
+               <button
+                  style={{ marginRight: '10px' }}
+                  onClick={(e) => {
+                     const link = document.createElement('a');
+                     link.href = `${API_WEB_DOMAIN}/${row.doc_file}`;
+                     link.download = row.doc_file.split('-').slice(1).join('-');
+                     link.target = '_self';
+                     document.body.appendChild(link);
+                     link.click();
+                     document.body.removeChild(link);
+                  }}
+               >
+                  <i className="la la-download"></i>
+               </button>
+
+
+
                <Link
                   to={`${API_WEB_DOMAIN}/${row.doc_file}`}
                   target="_blank"

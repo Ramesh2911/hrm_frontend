@@ -1,7 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Button, Col, Form, Row, Modal, Table } from 'react-bootstrap';
-import DataTable from "react-data-table-component";
-import DataTableSettings from "../../helpers/DataTableSettings";
 import { Link } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import {
@@ -36,12 +34,6 @@ const Attendance = (props) => {
       month: "",
    };
 
-   // useEffect(() => {
-   //    if (roleName === 'EMPLOYEE') {
-   //       fetchAttendance();
-   //    }
-   // }, [roleName]);
-
    useEffect(() => {
       if (roleName === 'ADMIN') {
          fetchEmployee();
@@ -56,7 +48,6 @@ const Attendance = (props) => {
    const [formErrors, setFormErrors] = useState({});
    const [btnEnable, setBtnEnable] = useState(false);
    const [loadingIndicator, setLoadingIndicator] = useState(true);
-   const [filterText, setFilterText] = useState("");
    const [showAttendance, setShowAttendance] = useState(false);
    const handleAttendanceToggle = () => setShowAttendance(!showAttendance);
    const [show, setShow] = useState(false);
@@ -65,17 +56,11 @@ const Attendance = (props) => {
    const [attendanceData, setAttendanceData] = useState([]);
    const [close, setClose] = useState(false);
    const [employeeData, setEmployeeData] = useState([]);
-   const [filterData, setFilterData] = useState([]);
+   const [filterData, setFilterData] = useState(null);
    const [selectedEmployee, setSelectedEmployee] = useState(null);
    const [departmentData, setDepartmentData] = useState([]);
    const [designationData, setDesignationData] = useState([]);
-   const searchParam = [
-      "attendance_date",
-      "attendance_login_time",
-      "attendance_logout_time",
-      "first_name",
-      "last_name",
-   ];
+
 
    const handleToggle = () => setShow(!show);
 
@@ -354,49 +339,6 @@ const Attendance = (props) => {
       handleAttendanceToggle();
    };
 
-   const columns = [
-      {
-         name: <h5>Date</h5>,
-         selector: (row) => props.getFormatedDate(row.attendance_date),
-         sortable: true,
-      },
-      {
-         name: <h5>Log In Time</h5>,
-         selector: (row) => row.attendance_login_time,
-         sortable: true,
-      },
-      {
-         name: <h5>Log Out Time</h5>,
-         selector: (row) => row.attendance_logout_time,
-         sortable: true,
-      },
-      {
-         name: <h5>Total Hours</h5>,
-         selector: (row) => calculateTotalHours(row.attendance_login_time, row.attendance_logout_time),
-         sortable: true,
-      },
-   ];
-
-   const subHeaderComponentMemo = useMemo(() => {
-      return (
-         <div>
-            <Row>
-               <Col lg={12}>
-                  <Form className="d-flex">
-                     <Form.Control
-                        type="search"
-                        placeholder="Search..."
-                        className="me-2 rounded-pill"
-                        aria-label="Search"
-                        onChange={(e) => setFilterText(e.target.value)}
-                     />
-                  </Form>
-               </Col>
-            </Row>
-         </div>
-      );
-   }, []);
-
    const exportToPDF = () => {
       const doc = new jsPDF();
 
@@ -483,7 +425,6 @@ const Attendance = (props) => {
                                  className="link-action"
                                  onClick={() => {
                                     setClose(true);
-                                    fetchAttendance();
                                     setFiltervalues({
                                        ...filterValues,
                                        year: "",
@@ -644,6 +585,7 @@ const Attendance = (props) => {
                                  <th>Log In Time</th>
                                  <th>Log Out Time</th>
                                  <th>Total Hours</th>
+                                 <th>Action</th>
                               </tr>
                            </thead>
                            <tbody>
@@ -653,6 +595,13 @@ const Attendance = (props) => {
                                     <td>{item.attendance_login_time}</td>
                                     <td>{item.attendance_logout_time}</td>
                                     <td>{calculateTotalHours(item.attendance_login_time, item.attendance_logout_time)}</td>
+                                    <td>
+                                       <>
+                                          <Link onClick={() => handleEditClick(item)}>
+                                             <i className="la la-edit"></i>
+                                          </Link>
+                                       </>
+                                    </td>
                                  </tr>
                               ))}
                            </tbody>

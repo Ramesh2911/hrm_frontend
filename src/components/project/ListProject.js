@@ -102,7 +102,6 @@ const ListProject = (props) => {
          project_title,
          project_description,
          project_start_date,
-         project_end_date,
          project_assign_to
       } = formValues;
       const errors = {};
@@ -122,13 +121,6 @@ const ListProject = (props) => {
       } else if (project_start_date !== "" && !props.isValidDate(project_start_date)) {
          isValid = false;
          errors.valid_start_date = "Start date is not valid";
-      }
-      if (project_end_date === "") {
-         isValid = false;
-         errors.project_end_date = "End date is required";
-      } else if (project_end_date !== "" && !props.isValidDate(project_end_date)) {
-         isValid = false;
-         errors.valid_end_date = "End date is not valid";
       }
       if (project_assign_to === "") {
          isValid = false;
@@ -250,12 +242,18 @@ const ListProject = (props) => {
       },
       {
          name: <h5>End Date</h5>,
-         selector: (row) => props.getFormatedDate(row.project_end_date),
+         selector: (row) => {
+            return row.project_end_date ? props.getFormatedDate(row.project_end_date) : 'Ongoing';
+         },
          sortable: true,
       },
       {
          name: <h5>Duration</h5>,
-         selector: (row) => getProjectDuration(row.project_start_date, row.project_end_date),
+         selector: (row) => {
+            if (!row.project_end_date) {
+            }
+            return getProjectDuration(row.project_start_date, row.project_end_date);
+         },
          sortable: true,
       },
       {
@@ -328,7 +326,7 @@ const ListProject = (props) => {
                      </Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
-                     <Form>
+                     <Form onSubmit={handleSubmit}>
                         <Form.Group className="mb-3" controlId="project_title">
                            <Form.Label>Project Title</Form.Label>
                            <Form.Control
@@ -416,17 +414,17 @@ const ListProject = (props) => {
                               {formValues.project_assign_to === "" && formErrors.project_assign_to}
                            </small>
                         </Form.Group>
+                        <div className="d-flex justify-content-end">
+                           <Button
+                              type="submit"
+                              disabled={btnEnable}
+                              variant="primary"
+                           >
+                              {isEditMode ? "Update" : "Save"}
+                           </Button>
+                        </div>
                      </Form>
                   </Modal.Body>
-                  <Modal.Footer>
-                     <Button
-                        disabled={btnEnable ? true : false}
-                        variant="primary"
-                        onClick={handleSubmit}
-                     >
-                        {isEditMode ? "Update" : "Save"}
-                     </Button>
-                  </Modal.Footer>
                </Modal>
                <DataTable
                   columns={columns}
