@@ -102,7 +102,7 @@ const Attendance = (props) => {
       return years;
    };
 
-   const yearOptions = generateYearOptions(2020);
+   const yearOptions = generateYearOptions(2023);
 
    const fetchAttendance = () => {
       props.callRequest("GET", `${API_LIST_ATTENDANCE}/${empId}`, true, null)

@@ -107,6 +107,62 @@ function LoginForm(props) {
       });
   };
 
+  // const handleLogInSubmit = (e) => {
+  //   e.preventDefault();
+
+  //   if (!validateLogin()) {
+  //     return false;
+  //   }
+
+  //   setBtnEnable(true);
+
+  //   props
+  //     .callRequest("POST", API_AUTHENTICATE, false, formValues)
+  //     .then((res) => {
+  //       try {
+  //         if (res.data.loginStatus) {
+  //           localStorage.setItem("loginStatus", res.data.loginStatus);
+  //           localStorage.setItem("token", String(res.data.userData.token));
+  //           localStorage.setItem("token_expired_on", res.data.userData.token_expired_on);
+  //           localStorage.setItem("id", res.data.userData.id);
+  //           localStorage.setItem("username", res.data.userData.username);
+  //           localStorage.setItem("role_name", res.data.userData.role_name);
+  //           localStorage.setItem("role_id", res.data.userData.role_id);
+
+  //           if (res.data.userData.role_name === "EMPLOYEE") {
+  //             localStorage.setItem("emp_id", res.data.userData.emp_id);
+  //             localStorage.setItem("first_name", res.data.userData.first_name);
+  //             localStorage.setItem("last_name", res.data.userData.last_name);
+  //             localStorage.setItem("is_default_pwd", res.data.userData.is_default_pwd);
+
+  //             if (res.data.userData.is_default_pwd === 0) {
+  //               navigate("/change-password");
+  //             } else {
+  //               navigate("/dashboard");
+  //             }
+  //           } else if (res.data.userData.role_name === "ADMIN") {
+  //             navigate("/dashboard");
+  //           }
+  //         } else {
+  //           setBtnEnable(false);
+  //           toast.error(`${res.data.Error}`, {
+  //             position: toast.POSITION.TOP_CENTER,
+  //             autoClose: 5000,
+  //           });
+  //         }
+  //       } catch (error) {
+  //         console.error("Error setting data in localStorage:", error);
+  //       }
+  //     })
+  //     .catch((e) => {
+  //       setBtnEnable(false);
+  //       toast.error(`${e.response?.data?.Error || "Login failed, please try again"}`, {
+  //         position: toast.POSITION.TOP_CENTER,
+  //         autoClose: 5000,
+  //       });
+  //     });
+  // };
+
   const handleLogInSubmit = (e) => {
     e.preventDefault();
 
@@ -144,24 +200,39 @@ function LoginForm(props) {
               navigate("/dashboard");
             }
           } else {
+            // Check for specific status error messages from backend
             setBtnEnable(false);
-            toast.error(`${res.data.Error}`, {
+
+            const errorMessage = res.data.Error || "Invalid login attempt. Please try again.";
+
+            toast.error(errorMessage, {
               position: toast.POSITION.TOP_CENTER,
               autoClose: 5000,
             });
+
+            // Additional logging for debugging
+            console.error("Login error:", errorMessage);
           }
         } catch (error) {
-          console.error("Error setting data in localStorage:", error);
+          console.error("Error processing login response:", error);
         }
       })
       .catch((e) => {
         setBtnEnable(false);
-        toast.error(`${e.response?.data?.Error || "Login failed, please try again"}`, {
+
+        const errorMessage = e.response?.data?.Error || "Login failed, please try again.";
+        toast.error(errorMessage, {
           position: toast.POSITION.TOP_CENTER,
           autoClose: 5000,
         });
+
+        console.error("Error in login request:", errorMessage);
       });
   };
+
+
+
+
 
   return (
     <>
