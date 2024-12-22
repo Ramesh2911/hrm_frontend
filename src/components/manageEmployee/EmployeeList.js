@@ -200,6 +200,20 @@ const ListEmployee = (props) => {
          sortable: true,
       },
       {
+         name: <h5>Status</h5>,
+         selector: (row) => (
+            <span
+               style={{
+                  color: row.status === "Active" ? "green" : "red",
+                  fontWeight: "bold",
+               }}
+            >
+               {row.status}
+            </span>
+         ),
+         sortable: true,
+      },
+      {
          name: <h6>Action</h6>,
          center: true,
          cell: (row) => (
