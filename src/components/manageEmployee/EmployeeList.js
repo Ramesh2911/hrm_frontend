@@ -33,9 +33,14 @@ const ListEmployee = (props) => {
    }, []);
 
    const fetchEmployee = () => {
-      props.callRequest("GET", API_LIST_EMPLOYEES, true, null)
+      props
+         .callRequest("GET", API_LIST_EMPLOYEES, true, null)
          .then((res) => {
-            const sortedData = res.data?.data?.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+            const sortedData = res.data?.data?.sort((a, b) => {
+               if (a.status === "Active" && b.status !== "Active") return -1;
+               if (a.status !== "Active" && b.status === "Active") return 1;
+               return new Date(b.created_at) - new Date(a.created_at);
+            });
             setEmployeeData(sortedData);
             setLoadingIndicator(false);
          })
