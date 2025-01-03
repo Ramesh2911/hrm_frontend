@@ -990,7 +990,7 @@ const AddEmployee = (props) => {
                <Row className="mb-3">
                   <Col lg={4}>
                      <Form.Group controlId="address_doc">
-                        <Form.Label>Upload Upload Proof of Address</Form.Label>
+                        <Form.Label>Upload Proof of Address</Form.Label>
                         <Form.Control
                            type="file"
                            name="address_doc"

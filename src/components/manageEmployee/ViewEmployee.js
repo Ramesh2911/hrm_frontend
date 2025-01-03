@@ -302,17 +302,17 @@ const ViewEmployee = (props) => {
                            <span>{empData?.post_code}</span>
                         </div>
                         <div className="col-xl-3 col-sm-6 mt-4">
-                           <h5 className="fw-bold text-muted">Address 1</h5>
+                           <h5 className="fw-bold text-muted">Address (1st line)</h5>
                            <span>{empData?.address1}</span>
                         </div>
                         <div className="col-xl-3 col-sm-6 mt-4">
-                           <h5 className="fw-bold text-muted">Address 2</h5>
+                           <h5 className="fw-bold text-muted">Address (2nd Line)</h5>
                            <span>{empData?.address2}</span>
                         </div>
                      </div>
                      <div className="row border-bottom pb-3">
                         <div className="col-xl-3 col-sm-6 mt-4">
-                           <h5 className="fw-bold text-muted">Address Document</h5>
+                           <h5 className="fw-bold text-muted">Proof of Address</h5>
                            {empData?.address_doc ? (
                               <Link
                                  to={`${API_WEB_DOMAIN}/${empData?.address_doc}`}

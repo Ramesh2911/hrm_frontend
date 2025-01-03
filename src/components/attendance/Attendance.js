@@ -65,7 +65,7 @@ const Attendance = (props) => {
    const handleToggle = () => setShow(!show);
 
    const calculateTotalHours = (loginTime, logoutTime) => {
-      if (!logoutTime) {
+      if (!loginTime || !logoutTime) {
          return 0.00;
       }
 
@@ -86,6 +86,10 @@ const Attendance = (props) => {
    };
 
    const calculateDays = (loginTime, logoutTime) => {
+      if (!loginTime || !logoutTime) {
+         return 0;
+      }
+
       const totalHours = calculateTotalHours(loginTime, logoutTime);
       if (totalHours <= 4) {
          return 0.5;

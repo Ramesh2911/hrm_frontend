@@ -1052,7 +1052,7 @@ const EditEmployee = (props) => {
                <Row className="mb-3">
                   <Col lg={4}>
                      <Form.Group controlId="address_doc">
-                        <Form.Label>Upload Upload Proof of Address</Form.Label>
+                        <Form.Label>Upload Proof of Address</Form.Label>
                         {formValues.address_doc && typeof formValues.address_doc === 'string' && (
                            <div>
                               <span>Current File: {formValues.address_doc.split('-').pop()}</span>

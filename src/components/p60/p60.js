@@ -399,7 +399,7 @@ const P60 = (props) => {
                   </Modal.Body>
                   <Modal.Footer>
                      <Button
-                        disabled={btnEnable ? true : false}
+                        //disabled={btnEnable ? true : false}
                         variant="primary"
                         onClick={handleSubmit}
                      >

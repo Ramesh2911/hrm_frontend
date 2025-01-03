@@ -21,6 +21,7 @@ function LoginForm(props) {
   });
   const [forgotPasswordFormValues, setForgotPasswordFormValues] = useState({
     user_name: "",
+    password: "",
   });
 
   const [formErrors, setFormErrors] = useState({});
@@ -37,7 +38,6 @@ function LoginForm(props) {
     const { name, value } = e.target;
     setForgotPasswordFormValues({ ...forgotPasswordFormValues, [name]: value });
   };
-
 
   const validateLogin = () => {
     const { user_name, user_password } = formValues;
@@ -59,7 +59,7 @@ function LoginForm(props) {
   };
 
   const validateForgotPassword = () => {
-    const { user_name } = forgotPasswordFormValues;
+    const { user_name, password } = forgotPasswordFormValues;
     const errors = {};
     let isValid = true;
 
@@ -67,7 +67,10 @@ function LoginForm(props) {
       isValid = false;
       errors.user_name = "User name is required";
     }
-
+    if (password === "") {
+      isValid = false;
+      errors.password = "Password is required";
+    }
     setPasswordFormErrors(errors);
     return isValid;
   };
@@ -80,7 +83,7 @@ function LoginForm(props) {
     setBtnEnable(true);
 
     props
-      .callRequest("POST", API_FORGOT_PASSWORD, true, forgotPasswordFormValues)
+      .callRequest("PUT", API_FORGOT_PASSWORD, true, forgotPasswordFormValues)
       .then((res) => {
         toast.success(`${res.data.message}`, {
           position: toast.POSITION.TOP_CENTER,
@@ -230,10 +233,6 @@ function LoginForm(props) {
       });
   };
 
-
-
-
-
   return (
     <>
       <Form onSubmit={handleLogInSubmit}>
@@ -292,7 +291,22 @@ function LoginForm(props) {
               {forgotPasswordFormValues.user_name === ""
                 && passwordFormErrors.user_name}
             </small>
-
+            <InputGroup className="my-2">
+              <InputGroup.Text>
+                <i className="las la-lock"></i>
+              </InputGroup.Text>
+              <Form.Control
+                type="password"
+                name="password"
+                placeholder=" Enter new Password"
+                autoComplete="off"
+                value={forgotPasswordFormValues.password}
+                onChange={handleForgotPasswordChange}
+              />
+            </InputGroup>
+            <small className="error">
+              {forgotPasswordFormValues.password === "" && passwordFormErrors.password}
+            </small>
           </div>
         )}
         {forgotPassword ? null : (
