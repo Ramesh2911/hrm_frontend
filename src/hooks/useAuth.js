@@ -1,11 +1,13 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function useAuth() {
     const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
         const token = localStorage.getItem("token");
+        if (location.pathname.startsWith("/reset-password")) return;
 
         if (!token) {
             navigate("/");

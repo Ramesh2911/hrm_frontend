@@ -7,6 +7,7 @@ export const API_WEB_DOMAIN = REACT_APP_API_WEB_DOMAIN + "/uploads";
 export const API_AUTHENTICATE = API_DOMAIN + "/authenticate";
 export const API_CHANGE_PASSWORD = API_DOMAIN + "/change-password";
 export const API_FORGOT_PASSWORD = API_DOMAIN + "/forgot-password";
+export const API_RESET_PASSWORD = API_DOMAIN + "/reset-password";
 
 //Dashboard
 export const API_EMPLOYEES_COUNT = API_DOMAIN + "/employees-count";

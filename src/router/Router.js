@@ -35,6 +35,7 @@ import ChangePasswordScreen from "../screens/authentication/ChangePasswordScreen
 import PaySlipsScreen from "../screens/paySlips/paySlipsScreen";
 import P60Screen from "../screens/p60/p60Screen";
 import LeaveDetailsScreen from "../screens/leave/LeaveDetailsScreen";
+import ResetPassword from "../components/authentication/ResetPassword";
 
 
 
@@ -45,6 +46,7 @@ export default function Router(props) {
   return (
     <>
       <Routes>
+        <Route exact path="/reset-password/:token" element={<ResetPassword {...props} />} />
         {!isAuthenticated ? (
           <>
             <Route exact path="/" element={<LoginScreen {...props} />} />
